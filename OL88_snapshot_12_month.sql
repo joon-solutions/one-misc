@@ -2,7 +2,7 @@
 -- Fixes include: partition by date, cluster by fields, create ID field instead
 -- then test with 2 months
 -- compare if linear --> if not has to do full table clone
-CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_1_MONTH 
+CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_12_MONTH 
 PARTITION BY DATE(SNAP_DT) 
 CLUSTER BY 
     CRNT_YD_CD
@@ -40,7 +40,8 @@ AS (
             EQ_KND_CD || --EQUIPMENT KIND CODE
             CRNT_YD_CD || --CONTAINER MOVEMENT YARD CODE
             CRNT_EQ_CTRL_OFC_CD || --FK --
-            CRNT_VVD_CD || BKG_CGO_TP_CD || --FK, BOOKING CARGO TYPE CODE
+            CRNT_VVD_CD || 
+            BKG_CGO_TP_CD || --FK, BOOKING CARGO TYPE CODE
             CHSS_POOL_CD || -- CHASSIS POOL CODE
             CNMV_STS_CD || --FK
             FULL_FLG || --FK
@@ -50,5 +51,5 @@ AS (
     FROM
         `one-global-dde-uat.DWH.DML_CNTR_LTST_MVMT_SNAP`
     WHERE
-        DATE(SNAP_DT) = '2022-10-01'
+        DATE(SNAP_DT) between '2022-08-01' and '2023-08-01'
 )

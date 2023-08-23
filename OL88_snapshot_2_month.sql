@@ -2,7 +2,7 @@
 -- Fixes include: partition by date, cluster by fields, create ID field instead
 -- then test with 2 months
 -- compare if linear --> if not has to do full table clone
-CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_1_MONTH 
+CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_2_MONTH 
 PARTITION BY DATE(SNAP_DT) 
 CLUSTER BY 
     CRNT_YD_CD
@@ -50,5 +50,5 @@ AS (
     FROM
         `one-global-dde-uat.DWH.DML_CNTR_LTST_MVMT_SNAP`
     WHERE
-        DATE(SNAP_DT) = '2022-10-01'
+        DATE(SNAP_DT) = '2022-10-01' OR DATE(SNAP_DT) = '2022-09-01'
 )
