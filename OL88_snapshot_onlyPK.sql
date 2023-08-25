@@ -1,36 +1,16 @@
--- test first with 1 month
--- Fixes include: partition by date, cluster by fields, create ID field instead
--- then test with 2 months
--- compare if linear --> if not has to do full table clone
+
+-- DROP TABLE IF EXISTS one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_only_pk;
 CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_only_pk
---PARTITION BY DATE(SNAP_DT) 
---CLUSTER BY 
-    --CRNT_YD_CD
-    --CNMV_STS_CD,
-    --N1ST_DY_SUN_FLG,
-    --EQ_TPSZ_CD
+PARTITION BY DATE_TRUNC(SNAP_DT, MONTH) --this is the original logic
+CLUSTER BY --identical clustering fields as original
+    SNAP_YRWK,
+    EQ_TPSZ_CD,
+    EQ_LSTM_CD,
+    EQ_MFT_DT
+    
 AS (
     SELECT
-        *
-    EXCEPT(
-            EQ_TPSZ_CD,
-            FULL_FLG,
-            EQ_OWN_VNDR_SEQ
-        ),
-        CASE
-            WHEN EQ_TPSZ_CD = '*' THEN NULL
-            WHEN EQ_TPSZ_CD = ' ' THEN NULL
-            ELSE EQ_TPSZ_CD
-        END AS EQ_TPSZ_CD,
-        CASE
-            WHEN FULL_FLG = '*' THEN NULL
-            WHEN FULL_FLG = 'Y' THEN 'FULL'
-            ELSE 'EMPTY'
-        END AS FULL_FLG,
-        CASE
-            WHEN EQ_OWN_VNDR_SEQ = 0 THEN NULL
-            ELSE EQ_OWN_VNDR_SEQ
-        END AS EQ_OWN_VNDR_SEQ,
+        *,
         MD5(
             SNAP_YRWK || --SNAPSHOT YEAR WEEK --> REDUNDANT
             DATE(SNAP_DT) || --SNAPSHOT DATE
@@ -50,6 +30,6 @@ AS (
         AS PK
     FROM
         `one-global-dde-uat.DWH.DML_CNTR_LTST_MVMT_SNAP`
-    WHERE
-        DATE(SNAP_DT) between '2022-08-01' and '2023-08-01'
+    --WHERE -- no more sample testing, this is FULL TABLE now
+    --    DATE(SNAP_DT) between '2022-08-01' and '2023-08-01'
 )
