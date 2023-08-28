@@ -3,10 +3,10 @@
 CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_only_pk
 PARTITION BY DATE_TRUNC(SNAP_DT, MONTH) --this is the original logic
 CLUSTER BY --identical clustering fields as original
-    SNAP_YRWK,
+    N1ST_DY_SUN_FLG,
+    CNMV_STS_CD,
     EQ_TPSZ_CD,
-    EQ_LSTM_CD,
-    EQ_MFT_DT
+    CRNT_YD_CD
     
 AS (
     SELECT
