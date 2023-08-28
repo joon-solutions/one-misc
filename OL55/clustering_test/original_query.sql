@@ -86,6 +86,7 @@ LEFT JOIN `DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ob ON dmc_trs_mod_ob.TRS_MOD_
 LEFT JOIN `DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ib ON dmc_trs_mod_ib.TRS_MOD_CD = dms_bkg_master.IB_TRSP_MOD_CD
 LEFT JOIN `DM_VIEWS.DMC_PERIOD_V`  AS dmc_period_bkg_rqst ON (DATE(timestamp( dms_bkg_master.XTER_RQST_RQST_DT ) ))=(DATE(PARSE_DATE("%Y%m%d", dmc_period_bkg_rqst.BSE_DT) ))
 WHERE (timestamp(dms_bkg_master.POL_ETD_DT ) ) >= (TIMESTAMP('2022-01-01 00:00:00'))
+  and date(dms_bkg_cntr.EDW_UPD_DT) BETWEEN '2022-01-01' AND  '2022-06-01' 
 GROUP BY
     1,
     2,
