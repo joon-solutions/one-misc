@@ -1,0 +1,23 @@
+create or replace table one-global-looker-dev.test_table_materialization.DMC_BKG_RD_TERM_V as 
+with RCV as (
+    SELECT DISTINCT INTG_CD_VAL_CTNT AS BKG_TERM_CD, INTG_CD_VAL_DP_DESC AS BKG_TERM_NM
+    FROM one-global-dde-prod.OPUS.DWC_COM_CD_DTL
+    WHERE INTG_CD_ID IN ( 'CD00764','CD00765' )                          
+                    
+),
+
+DEL as (
+    SELECT DISTINCT INTG_CD_VAL_CTNT AS BKG_TERM_CD, INTG_CD_VAL_DP_DESC AS BKG_TERM_NM
+    FROM one-global-dde-prod.OPUS.DWC_COM_CD_DTL
+    WHERE INTG_CD_ID IN ( 'CD00764','CD00765' )            
+)
+
+SELECT 
+    RCV.BKG_TERM_CD AS BKG_RCV_TERM_CD, 
+    RCV.BKG_TERM_NM AS BKG_RCV_TERM_NM, 
+    DEL.BKG_TERM_CD AS BKG_DE_TERM_CD, 
+    DEL.BKG_TERM_NM AS BKG_DE_TERM_NM, 
+    RCV.BKG_TERM_CD || '/' || DEL.BKG_TERM_CD AS BKG_RD_TERM_CD, RCV.BKG_TERM_NM || '/' || DEL.BKG_TERM_NM AS BKG_RD_TERM_NM
+FROM  RCV
+LEFT OUTER JOIN  DEL
+ON 1=1
