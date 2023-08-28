@@ -2,10 +2,10 @@ CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_12_MONTH_PA
 
 PARTITION BY DATE(SNAP_DT) --replaced from MONTH, changed to DATE
 CLUSTER BY --identical clustering fields as original
-    SNAP_YRWK,
+    N1ST_DY_SUN_FLG,
+    CNMV_STS_CD,
     EQ_TPSZ_CD,
-    EQ_LSTM_CD,
-    EQ_MFT_DT
+    CRNT_YD_CD
 AS (
     SELECT
         *
