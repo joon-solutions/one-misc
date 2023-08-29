@@ -59,34 +59,35 @@ SELECT
         (FORMAT_TIMESTAMP('%F %T', timestamp(dms_bkg_master.POL_ETD_DT ) )) AS dms_bkg_master_n1st_pol_etd_dt_time,
         (FORMAT_TIMESTAMP('%F %T', timestamp( dms_bkg_master.N1ST_POL_ATD_DT ) )) AS dms_bkg_master_n1st_pol_atd_dt_time,
     dmc_period_bkg_rqst.YRMON_DESC  AS dmc_period_bkg_rqst_yrmon_desc
-FROM one-global-dde-uat.bq_log_sink.OL55_SNAPSHOT_CLUSTER_1  AS dms_bkg_cntr
-LEFT JOIN `DWH.DMS_BKG_MASTER`  AS dms_bkg_master ON dms_bkg_cntr.BKG_NO=dms_bkg_master.BKG_NO
-LEFT JOIN `DM_VIEWS.DMC_BKG_STS_V`  AS dmc_bkg_sts ON dms_bkg_master.BKG_STS_CD=dmc_bkg_sts.BKG_STS_CD
-LEFT JOIN `DM_VIEWS.DMC_BKG_RD_TERM_V`  AS dmc_bkg_r_d_term_cntr ON dmc_bkg_r_d_term_cntr.bkg_rd_term_cd=dms_bkg_cntr.RD_TERM_CD
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_trnk_pol ON dmc_yard_trnk_pol.nod_cd= dms_bkg_master.TRNK_POL_NOD_CD
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_trnk_pod ON dmc_yard_trnk_pod.nod_cd= dms_bkg_master.TRNK_POD_NOD_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_shpr ON dms_bkg_master.SHPR_CUST_CD=dmc_customer_shpr.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_antfy ON dms_bkg_master.ANTFY_CUST_CD=dmc_customer_antfy.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_cnee ON dms_bkg_master.CNEE_CUST_CD=dmc_customer_cnee.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_BKG_RQST_MZD_V`  AS dmc_bkg_rqst ON dmc_bkg_rqst.XTER_BKG_RQST_CD=dms_bkg_master.XTER_BKG_RQST_CD
-LEFT JOIN `DM_VIEWS.DMC_BKG_RQST_MZD_V`  AS dmc_bkg_rqst_si ON dmc_bkg_rqst_si.XTER_BKG_RQST_CD=dms_bkg_master.XTER_SI_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_bkg_ctrl ON dms_bkg_master.BKG_CTRL_PTY_CUST_CD=dmc_customer_bkg_ctrl.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_ctrt ON dms_bkg_master.SC_CUST_CD=dmc_customer_ctrt.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_fwrd ON dms_bkg_master.FWRD_CUST_CD=dmc_customer_fwrd.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_ntfy ON dms_bkg_master.NTFY_CUST_CD=dmc_customer_ntfy.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_esi_bkg ON dms_bkg_master.BKG_PTY_CUST_CD=dmc_customer_esi_bkg.CUST_CD
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_n1st_pol ON dms_bkg_master.N1ST_POL_NOD_CD=dmc_yard_n1st_pol.nod_cd
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_lst_pod ON dms_bkg_master.POD_NOD_CD=dmc_yard_lst_pod.nod_cd
-LEFT JOIN `DM_VIEWS.DMC_LOCATION_V` AS dmc_loc_por ON dms_bkg_master.POR_CD=dmc_loc_por.LOC_CD
-LEFT JOIN `DM_VIEWS.DMC_LOCATION_V` AS dmc_loc_del ON dms_bkg_master.DEL_CD=dmc_loc_del.LOC_CD
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_del ON dms_bkg_master.DEL_NOD_CD=dmc_yard_del.nod_cd
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_act_mty_pkup ON dms_bkg_cntr.ACT_MTY_PKUP_YD_CD=dmc_yard_act_mty_pkup.nod_cd
-LEFT JOIN `DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_act_mty_rtn ON dms_bkg_cntr.ACT_MTY_RTN_YD_CD=dmc_yard_act_mty_rtn.nod_cd
-LEFT JOIN `DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ob ON dmc_trs_mod_ob.TRS_MOD_CD = dms_bkg_master.OB_TRSP_MOD_CD
-LEFT JOIN `DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ib ON dmc_trs_mod_ib.TRS_MOD_CD = dms_bkg_master.IB_TRSP_MOD_CD
-LEFT JOIN `DM_VIEWS.DMC_PERIOD_V`  AS dmc_period_bkg_rqst ON (DATE(timestamp( dms_bkg_master.XTER_RQST_RQST_DT ) ))=(DATE(PARSE_DATE("%Y%m%d", dmc_period_bkg_rqst.BSE_DT) ))
+FROM `one-global-dde-uat.DWH.DMS_BKG_CNTR`  AS dms_bkg_cntr
+LEFT JOIN `one-global-dde-uat.DWH.DMS_BKG_MASTER`  AS dms_bkg_master ON dms_bkg_cntr.BKG_NO=dms_bkg_master.BKG_NO
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_BKG_STS_V`  AS dmc_bkg_sts ON dms_bkg_master.BKG_STS_CD=dmc_bkg_sts.BKG_STS_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_BKG_RD_TERM_V`  AS dmc_bkg_r_d_term_cntr ON dmc_bkg_r_d_term_cntr.bkg_rd_term_cd=dms_bkg_cntr.RD_TERM_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_trnk_pol ON dmc_yard_trnk_pol.nod_cd= dms_bkg_master.TRNK_POL_NOD_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_trnk_pod ON dmc_yard_trnk_pod.nod_cd= dms_bkg_master.TRNK_POD_NOD_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_shpr ON dms_bkg_master.SHPR_CUST_CD=dmc_customer_shpr.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_antfy ON dms_bkg_master.ANTFY_CUST_CD=dmc_customer_antfy.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_cnee ON dms_bkg_master.CNEE_CUST_CD=dmc_customer_cnee.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_BKG_RQST_MZD_V`  AS dmc_bkg_rqst ON dmc_bkg_rqst.XTER_BKG_RQST_CD=dms_bkg_master.XTER_BKG_RQST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_BKG_RQST_MZD_V`  AS dmc_bkg_rqst_si ON dmc_bkg_rqst_si.XTER_BKG_RQST_CD=dms_bkg_master.XTER_SI_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_bkg_ctrl ON dms_bkg_master.BKG_CTRL_PTY_CUST_CD=dmc_customer_bkg_ctrl.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_ctrt ON dms_bkg_master.SC_CUST_CD=dmc_customer_ctrt.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_fwrd ON dms_bkg_master.FWRD_CUST_CD=dmc_customer_fwrd.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_ntfy ON dms_bkg_master.NTFY_CUST_CD=dmc_customer_ntfy.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_CUSTOMER_LM_V`  AS dmc_customer_esi_bkg ON dms_bkg_master.BKG_PTY_CUST_CD=dmc_customer_esi_bkg.CUST_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_n1st_pol ON dms_bkg_master.N1ST_POL_NOD_CD=dmc_yard_n1st_pol.nod_cd
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_lst_pod ON dms_bkg_master.POD_NOD_CD=dmc_yard_lst_pod.nod_cd
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_LOCATION_V` AS dmc_loc_por ON dms_bkg_master.POR_CD=dmc_loc_por.LOC_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_LOCATION_V` AS dmc_loc_del ON dms_bkg_master.DEL_CD=dmc_loc_del.LOC_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_del ON dms_bkg_master.DEL_NOD_CD=dmc_yard_del.nod_cd
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_act_mty_pkup ON dms_bkg_cntr.ACT_MTY_PKUP_YD_CD=dmc_yard_act_mty_pkup.nod_cd
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_NOD_LM_V`  AS dmc_yard_act_mty_rtn ON dms_bkg_cntr.ACT_MTY_RTN_YD_CD=dmc_yard_act_mty_rtn.nod_cd
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ob ON dmc_trs_mod_ob.TRS_MOD_CD = dms_bkg_master.OB_TRSP_MOD_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_TRS_MOD_V`  AS dmc_trs_mod_ib ON dmc_trs_mod_ib.TRS_MOD_CD = dms_bkg_master.IB_TRSP_MOD_CD
+LEFT JOIN `one-global-dde-uat.DM_VIEWS.DMC_PERIOD_V`  AS dmc_period_bkg_rqst ON (DATE(timestamp( dms_bkg_master.XTER_RQST_RQST_DT ) ))=(DATE(PARSE_DATE("%Y%m%d", dmc_period_bkg_rqst.BSE_DT) ))
 WHERE (timestamp(dms_bkg_master.POL_ETD_DT ) ) >= (TIMESTAMP('2022-01-01 00:00:00'))
   and date(dms_bkg_cntr.EDW_UPD_DT) BETWEEN '2022-01-01' AND  '2022-06-01' 
+  and dms_bkg_cntr.BKG_NO = 'KINU00009500'
 GROUP BY
     1,
     2,
