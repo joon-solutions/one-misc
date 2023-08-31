@@ -9,7 +9,7 @@ AS (
     SELECT
         *
     FROM
-        `one-global-dde-uat.DEV_DWH.DMS_BKG_CNTR`
+        `one-global-dde-prod.DWH.DMS_BKG_CNTR`
     WHERE
         DATE(EDW_UPD_DT) between '2022-08-01' and '2023-08-01'
 )

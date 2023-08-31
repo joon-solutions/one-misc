@@ -7,7 +7,7 @@ AS (
     SELECT
         *
     FROM
-        `one-global-dde-uat.DEV_DWH.DMS_BKG_MASTER`
+        `one-global-dde-prod.DWH.DMS_BKG_MASTER`
     WHERE
         DATE(N1ST_POL_ETD_GDT) between '2022-08-01' and '2023-08-01'
 )
