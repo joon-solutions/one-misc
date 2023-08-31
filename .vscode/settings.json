@@ -1,3 +1,23 @@
 {
-  "jira-plugin.workingProject": ""
+  "jira-plugin.workingProject": "",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#fea598",
+    "activityBar.background": "#fea598",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#017e11",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#fea598",
+    "statusBar.background": "#fe7965",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#fe4d32",
+    "statusBarItem.remoteBackground": "#fe7965",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#fe7965",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#fe796599",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#fe7965"
 }

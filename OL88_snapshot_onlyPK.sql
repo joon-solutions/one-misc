@@ -1,8 +1,8 @@
 
 -- DROP TABLE IF EXISTS one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_only_pk;
 CREATE OR REPLACE TABLE one-global-dde-uat.bq_log_sink.OL88_SNAPSHOT_only_pk
-PARTITION BY DATE_TRUNC(SNAP_DT, MONTH) --this is the original logic
-CLUSTER BY --identical clustering fields as original
+PARTITION BY DATE_TRUNC(SNAP_DT, MONTH) --as original: partition by month
+CLUSTER BY --identical clustering fields as original (Aug 28)
     N1ST_DY_SUN_FLG,
     CNMV_STS_CD,
     EQ_TPSZ_CD,
